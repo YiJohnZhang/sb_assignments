@@ -1,0 +1,5 @@
+I.1.	git branch branchName
+I.2.	Fastforward merge is one when the GIT merge algorithm can tell chronological progression and automatically forcibly overwrites ancestor file(s) with the latest one. Recursive merge is executed if the GIT merge algorithm detects multiple valid ancesotors and attempts to create a new file from those.
+I.3.	git checkout anotherBranchName
+I.4.	git branch -d branchToDelete
+I.5.	When files of the same name exist in the branches to-be merged but there are lines of text that have similar but not exact correspondence in terms of text, i.e. variable name(s) and/or expression(s).
