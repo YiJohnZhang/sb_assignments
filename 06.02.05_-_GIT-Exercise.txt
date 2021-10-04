@@ -1,0 +1,12 @@
+1.	mkdir learn_git_again
+cd learn_git_again
+3.	touch third.txt
+4.	git init
+5.	git add third.txt
+6.	git commit -m 'adding third.txt'
+8.	touch fourth.txt
+9.	git add fourth.txt
+10.	git commit -m 'adding fourth.txt'
+12.	git rm third.txt
+13.	git commit -m 'rm third.txt'
+ 
