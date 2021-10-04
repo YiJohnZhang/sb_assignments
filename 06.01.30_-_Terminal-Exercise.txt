@@ -1,0 +1,20 @@
+1.	mkdir first
+2.	cd first
+3.	touch person.txt
+4.	mv person.txt another.txt
+5.	cp another.txt copy.txt
+6.	rm copy.txt
+7.	cp ../first ../second
+8.	rm -fr ../second
+
+1.	man commandName displays the details --function, naming logic, and availalbe options --of the command corresponding to commandName. One may scroll with the mouse scroll wheel or arrow keys; to exit, press 'q'.
+2.	The 'l' flag, -l, provides a long listing format. The 'a' flag, -a, states to not ignore entities that start with '.' (i.e. hidden files)
+3.	Alt+Right/Left Arrow
+4.	Ctrl+e
+5.	Ctrl+a
+6.	Ctrl+w
+7.	The terminal is the software (or hardware prior to GUI) that runs the shell. The shell is the software that processes the commands.
+8.	The absolute path specifies the file or directory from the root.
+9.	The relative path specifies the file or directory from the present working directory.
+10.	A flag is a modifier for a command's operation and/or target(s). ls's 'a' command, ls's 'l' command, rm's 'f' f command.
+11.	The 'r' flag of the 'rm' command recursively removes the contents of the directory and the directory itself. The 'f' flag of the 'rm' command forcibly executes the 'rm' command and both ignores and suppresses all safeguards built into the function.
