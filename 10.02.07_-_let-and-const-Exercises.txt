@@ -1,0 +1,16 @@
+const PI = 3.14;
+
+Quiz
+The differences between 'var' and 'let' are:
+	- Variables declared with 'let' may only be declared once.
+	- 'let' has limited support compared to 'var'.
+
+The differences between 'var' and 'const':
+	- Variables declared with 'const' may not be reassigned a value by the assignment operator nor declared multiple times; these are permitted with 'var'.
+	- 'const' has limited support compared to 'var'.
+
+The differences between 'let' and 'const' are:
+	- Variables declared with 'const' may not be reassigned a value by the assignment operator; this is allowed with 'let'.
+	- 'let' has limited support compared to 'const'.
+
+Hoisting, in the context of JavaScript, is the behavior that a variable is declared --and therefore exists in memory --as the first tasks upon executing said script.
