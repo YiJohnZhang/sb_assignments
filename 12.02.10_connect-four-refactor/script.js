@@ -7,12 +7,18 @@
 
  class Game{
 
-  constructor (gameWallHeight = 6, gameWallWidth = 7){
+  constructor (playerObjectOne, playerObjectTwo, gameWallHeight = 6, gameWallWidth = 7){
 
     this.HEIGHT = gameWallHeight;
     this.WIDTH = gameWallWidth;
+    
+    playerObjectOne.playerID = 1;
+    playerObjectTwo.playerID = 2;
+    this.gamePlayers = [playerObjectOne, playerObjectTwo];
+    this.currentPlayerObject = this.gamePlayers[0];
+    this.currentPlayerID = 1;
+
     this.gameBoard = [];
-    this.currentPlayer = 1;
     //this.playerCount = 2; //this can become a parameter for later development so that there are more than 2 players.
 
   }
@@ -21,22 +27,24 @@
  *   board = array of rows, each row is array of cells  (board[y][x])
  */
   initializeBoard(){
-
+    let tempEmptyArray;
     for (let y = 0; y < this.HEIGHT; y++) {
-      this.gameBoard.push(Array.from({ length: this.WIDTH }));
+      tempEmptyArray = new Array(this.WIDTH).fill(0);
+      this.gameBoard.push(tempEmptyArray);
     }
   }
 
   /** makeHtmlBoard: make HTML table and row of column tops. */
   initializeHTMLBoard(){
+    document.getElementById('playerTurnInformation').innerHTML = `<span style="color:${this.currentPlayerObject.playerColor}">Player ${this.currentPlayerID}'s Turn`  //how come .innerHTML automatically wraps with '<\\span>'?
     //create board
     const board = document.getElementById('board');
 
     // make interactive top row to place the piece
     const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
-    top.addEventListener('click', this.clickHandler);
-  
+    top.addEventListener('click', this.clickHandler.bind(this));
+
     for (let x = 0; x < this.WIDTH; x++) {
       const headCell = document.createElement('td');
       headCell.setAttribute('id', x);
@@ -62,7 +70,6 @@
 
   /** findColumnSpotHandler: given column x, return top empty y (null if filled); handler function */
   findColumnSpotHandler(x){
-    console.log(`this: ${this}`);
     for(let y = this.HEIGHT-1; y >= 0; y--){
       if(!this.gameBoard[y][x])
         return y;
@@ -76,8 +83,9 @@
   placePieceInTableHandler(y, x){
       const piece = document.createElement('div');
       piece.classList.add('piece');
-      piece.classList.add(`p${this.currentPlayer}`);
+      piece.classList.add(`p${this.currentPlayerID}`);
       piece.style.top = -50 * (y + 2);
+      piece.style.backgroundColor = this.currentPlayerObject.playerColor;
     
       const spot = document.getElementById(`${y}-${x}`);
       spot.append(piece);  
@@ -93,7 +101,7 @@
     function _win(cells) {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
-      //  - returns true if all are legal coordinates & all match this.currentPlayer
+      //  - returns true if all are legal coordinates & all match this.currentPlayerID
 
       return cells.every(
         ([y, x]) =>
@@ -101,7 +109,7 @@
           y < this.HEIGHT &&
           x >= 0 &&
           x < this.WIDTH &&
-          board[y][x] === this.currentPlayer
+          this.gameBoard[y][x] === this.currentPlayerID
       );
     }
 
@@ -114,8 +122,9 @@
         const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
         const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
+        //console.log(_win.call(this,horiz));
         // find winner (only checking each win-possibility as needed)
-        if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
+        if (_win.call(this,horiz) || _win.call(this,vert) || _win.call(this,diagDR) || _win.call(this,diagDL)) {
           return true;
         }
       }
@@ -124,10 +133,7 @@
 
   /** clickHandler: handle click of column top to play piece */
   clickHandler(evt) {
-
-    console.log(this);
-    //need a reliable way to get both 'evt' parameter and the instance of the class as 'this'
-    // get x from ID of clicked cell
+    
     const x = +evt.target.id;
 
     // get next spot in column (if none, ignore click)
@@ -137,12 +143,12 @@
     }
 
     // place piece in board and add to HTML table
-    this.gameBoard[y][x] = this.currentPlayer;
+    this.gameBoard[y][x] = this.currentPlayerID;
     this.placePieceInTableHandler(y, x);
     
     // check for win
     if (this.checkWinHandler()) {
-      return this.endGameHandler(`Player ${this.currentPlayer} won!`);
+      return this.endGameHandler(`Player ${this.currentPlayerID} won!`);
     }
     
     // check for tie
@@ -151,9 +157,19 @@
     }
       
     // switch players
-    this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    this.currentPlayerObject = this.currentPlayerObject === this.gamePlayers[0] ? this.gamePlayers[1]:this.gamePlayers[0];
+    console.log(this.currentPlayerObject);
+    this.currentPlayerID = this.currentPlayerObject.playerID;
+    document.getElementById('playerTurnInformation').innerHTML = `<span style="color:${this.currentPlayerObject.playerColor}">Player ${this.currentPlayerID}'s Turn`  //how come .innerHTML automatically wraps with '<\\span>'?
   }
 
+}
+
+class Player{
+  constructor(playerColor){
+    this.playerColor = playerColor;
+    this.playerID;
+  }
 }
 
 function initializeGame(){
@@ -164,9 +180,12 @@ function initializeGame(){
     boardHTMLElement.removeChild(boardHTMLElement.firstChild);
   }
 
-  const game = new Game();
-  game.initializeBoard();
-  game.initializeHTMLBoard();
+  const playerOne = new Player(document.getElementById('playerOneColor').value);
+  const playerTwo = new Player(document.getElementById('playerTwoColor').value);
+
+  const gameInstance = new Game(playerOne, playerTwo);
+  gameInstance.initializeBoard();
+  gameInstance.initializeHTMLBoard();
 
 }
 
