@@ -1,0 +1,8 @@
+Assessment Number & Name: 15_jeopardy
+Today's Date; Time Period   Time Spent	Description of Work // Reason for break
+F, 2021.10.22	21:17 - 21:23 0hr6m       read specs for 15_assessment2(jeopardy) // restroom+shower+snack
+F, 2021.10.22	21:54 - 22:06 0hr12m	    pseudocode, jService API familiarization // -
+F, 2021.10.22	22:06 - 23:58 1hr52m	    finished random selection of categories and clues (where applicable) incl. debug //	sleep
+S, 2021.10.23	13:55 - 14:42 0hr47m	    rm hideLoadingView() and showLoadingView(): no assets for it,  pseudocode and coding for GUI interface and udpate backdrop; accidentally changed html document to mess with css file (css styles not applying; resolved to use jquery styles)	// parents need help w/ diy 20' ceiling chandelier installation + spotting
+S, 2021.10.23	16:12 - 17:00 0m48m	      handleClick(evt) & final touches
+		TOTAL	3hr45m		
