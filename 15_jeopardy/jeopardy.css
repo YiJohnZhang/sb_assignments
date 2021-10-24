@@ -1,0 +1,21 @@
+#jeopardyTable th{
+  
+  padding: 2px;
+  background-color: #115ff4;
+  color:#fff;
+  text-align:center;
+  text-transform:uppercase;
+
+}
+
+#jeopardyTable td{
+
+  width: 16em;
+  height: 9em;
+  border: solid 1px #fff;
+  padding: 2px;
+  background-color: #115ff4;
+  color:#fff;
+  text-align:center;
+  
+}
