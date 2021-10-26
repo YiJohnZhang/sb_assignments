@@ -1,0 +1,1 @@
+//Consolidated into payments.test.js
