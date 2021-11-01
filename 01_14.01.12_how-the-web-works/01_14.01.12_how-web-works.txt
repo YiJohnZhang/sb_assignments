@@ -1,0 +1,23 @@
+01. Terminology
+1. HTTP stands for HyperText Transfer Protocol. It is a standard that outlines how machines communicate to transfer 'hypertext' documents.
+2. URL stands for Universal Resource Locator. It is a string that states the protocol to transfer a requested resource, the host location of the resource, and the name of the resource requested.
+3. DNS stands for Domain Name System. It is a registry system that behaves similar to a phonebook that translates a host name that is human-friendly into the corresponding host's address.
+4. A query string is additional information to further specify the resources requested and change the web application accordingly.
+5. GET and POST. GET implies reading a resource from the database while POST implies writing to the database.
+6. An HTTP request is a submission from the client-side for a resource on a server.
+7. An HTTP response is a provision from the server-side that best attempts to fulfill the client's request.
+8. An HTTP header contains metadata of a HTTP request/response --i.e. method, protocol, requested content type, and status code.
+9. The URL is interpreted by the browser to its protocol (HTTP), the IP address of the host name (www.somesite.com), and the resource location on the host (in a directory called 'some' for a file called 'page.html')
+To interpret the IP Address, the browser first checks the computer's cache, router connections, then the ISP's network, and then the DNS registry. Once the IP address is found, the request is sent to the located server through default port 80 and an appropriate response is provided. If the IP address is not found, an error is returned.
+
+02. Practice Tools
+1. curl https://reqbin.com/echo/get/json
+   -H "Accept: application/json" https://icanhazdadjoke.com/search?term=pirate
+2. dig a www.canihazdadjoke.com (alias)
+> 104.21.37.176
+> 172.67.211.64
+3.	done
+
+03. Dev Tools
+See '01_14.01.12_03-folder'
+
