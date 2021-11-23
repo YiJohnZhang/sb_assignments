@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{surveyObject.title}}
+{% endblock %}
+
+{% block content %}
+
+<p>{{surveyObject.instructions}}</p>   
+<form action='/questions/{{currentID+1}}' method="post">
+    <!-- How to make the 'action' attribute more legible and maintainable (before there would be too many spaces, '%20' in the URL if I did new line and tab(s)) -->
+    <!-- used to be: /{% if lastSurveyPage %}thankyou{% else %}questions/{{currentID+1}}{% endif %} -->
+    {% for surveyQuestion in surveyObject.questions %}
+        <p>{{surveyQuestion.question}}</p>
+        {% if surveyQuestion.choices %}
+            {% for questionOption in surveyQuestion.choices %}
+                <input type="radio" name='{{currentID}}.radio{{surveyQuestion}}' id='{{currentID}}.{{surveyQuestion}}.{{questionOption}}' value='{{questionOption}}'>
+                <label for="{{currentID}}.{{surveyQuestion}}.{{questionOption}}">{{questionOption}}</label>
+            {% endfor %}
+        {% endif %}
+        {% if surveyQuestion.allow_text %}
+            <!-- Later: Dynamic name Attribute when I store in a dict -->
+            <input type="text" name='{{curentID}}.{{surveyQuestion}}'>
+        {% endif %}
+    {% endfor %}
+    <br><input type="submit" value='{% if lastSurveyPage %}Submit{% else %}Next Page{% endif %}'>
+</form>
+{% endblock %}
