@@ -1,0 +1,100 @@
+#06
+06.01. SELECT matchid, player FROM goal g WHERE g.teamid = 'GER';
+06.02. SELECT id, stadium, team1, team2 FROM game WHERE id=1012;
+06.03. SELECT player, teamid, stadium, mdate FROM game ga JOIN goal go ON ga.id = go.matchID WHERE teamid = 'GER';
+06.04. SELECT team1, team2, player FROM goal go JOIN game ga ON go.matchid = ga.id WHERE player LIKE 'Mario %';
+06.05. SELECT player, teamid, coach, gtime FROM goal go JOIN eteam e ON go.teamid = e.id WHERE go.gtime <= 10;
+06.06.
+SELECT mdate, teamname
+	FROM eteam e JOIN goal go ON go.teamid = e.id
+	JOIN game ga ON ga.id = go.matchid
+	WHERE team1='GRE'  AND teamname='Greece'
+	GROUP BY ga.mdate, e.teamname;
+06.07.
+SELECT go.player
+	FROM goal go JOIN game ga ON go.matchid = ga.id
+	WHERE stadium ='National Stadium, Warsaw';
+06.08.
+SELECT DISTINCT(player)
+	FROM goal go JOIN game ga ON go.matchid = ga.id
+	WHERE teamid != 'GER' AND (team1 = 'GER' OR team2 = 'GER');
+--use distinct to prevent double listing
+06.09.
+SELECT teamname, COUNT(*) AS count
+	FROM goal go JOIN eteam e ON go.teamid = e.id
+	GROUP BY teamname
+06.10.
+SELECT stadium, count(*) AS goals
+	FROM game ga JOIN goal go ON ga.id = go.matchID
+	GROUP BY stadium;
+06.11.
+SELECT matchid, mdate, COUNT(matchid)
+	FROM game ga JOIN goal go ON ga.id = go.matchid
+	WHERE (team1 = 'POL' OR team2 = 'POL')
+	GROUP BY go.matchid, ga.mdate;
+--why is ga.mdate needed (gisq.ga.mdate isn't in GROUP BY)? i.e. if I did
+--SELECT matchid, mdate, player
+--	FROM game ga JOIN goal go ON ga.id = go.matchid
+--	WHERE (team1 = 'POL' OR team2 = 'POL')
+--	GROUP BY go.matchid
+--I see I could still aggregate by using COUNT(matchid)?
+06.12.
+SELECT matchid, mdate, COUNT(*)
+	FROM goal go JOIN game ga ON go.matchid = ga.id
+	WHERE teamid = 'GER'
+	GROUP BY go.matchid, ga.mdate;
+--Intriguing: if I were to add 'teamid' property to be selected, I would have to also group by go.teamid.
+06.13.
+--wtf
+
+#07
+07.01. SELECT id, title FROM movie WHERE yr = 1962;
+07.02. SELECT yr FROM movie WHERE title='Citizen Kane';
+07.03. SELECT id, title, yr FROM movie WHERE title LIKE 'Star Trek%' ORDER BY yr;
+07.04. SELECT id FROM actor WHERE name = 'Glenn Close';
+07.05. SELECT id FROM movie WHERE title = 'Casablanca';
+07.06.
+SELECT a.name
+	FROM casting c JOIN actor a ON c.actorid = a.id
+	WHERE movieid = 11768;
+07.07.
+--movieid = 10522
+SELECT a.name
+	FROM casting c JOIN actor a ON c.actorid = a.id
+	WHERE movieid = 10522;
+07.08.
+--SELECT id FROM actor WHERE name = 'Harrison Ford'; => id=2216
+SELECT title
+	FROM movie m JOIN casting c ON m.id = c.movieid
+	WHERE actorid = 2216;
+07.09.
+SELECT title
+	FROM movie m JOIN casting c ON m.id = c.movieid
+	WHERE actorid = 2216 AND ord!=1;
+07.10.
+SELECT m.title, a.name
+	FROM movie m JOIN casting c ON m.id = c.movieid JOIN actor a ON c.actorid = a.id
+	WHERE m.yr = 1962 AND c.ord = 1;
+07.11.
+SELECT yr,COUNT(title)
+	FROM movie JOIN casting ON movie.id=movieid JOIN actor   ON actorid=actor.id
+	WHERE name='Rock Hudson'
+	GROUP BY yr
+	HAVING COUNT(title) > 2;
+07.12.
+--Julie andres = 179
+SELECT m.title, a.name
+	FROM movie m JOIN casting c ON m.id = c.movieid JOIN actor a ON a.id = c.actorid
+	WHERE c.ord = 1 AND m.id IN (SELECT c.movieid FROM movie m JOIN casting c ON m.id = c.movieid WHERE c.actorid = 179)
+07.13.
+SELECT DISTINCT(name)
+	FROM movie m JOIN casting c ON m.id = c.movieid JOIN actor a ON a.id = c.actorid
+	WHERE c.actorid IN (SELECT c.actorid FROM casting c WHERE c.ord = 1 GROUP BY c.actorid HAVING COUNT(actorid) >= 15)
+	ORDER BY name
+07.14.
+SELECT m.title, COUNT(c.actorid)
+	FROM movie m JOIN casting c ON m.id = c.movieid
+	WHERE yr = 1978
+	GROUP BY movieid, title
+	ORDER BY COUNT(actorid) DESC, title ASC;
+07.15.
